@@ -22,6 +22,16 @@ document.addEventListener("DOMContentLoaded", function() {
         natanCheckbox.checked = true;
     }
 
+    // Carregar créditos do localStorage, se existirem
+    creditoMatheus.value = localStorage.getItem('creditoMatheus') || '0';
+    creditoItalo.value = localStorage.getItem('creditoItalo') || '0';
+    creditoNatan.value = localStorage.getItem('creditoNatan') || '0';
+
+    // Atualizar contadores de créditos
+    contadorMatheus.textContent = creditoMatheus.value;
+    contadorItalo.textContent = creditoItalo.value;
+    contadorNatan.textContent = creditoNatan.value;
+
     matheusCheckbox.addEventListener('change', atualizarCredito);
     italoCheckbox.addEventListener('change', atualizarCredito);
     natanCheckbox.addEventListener('change', atualizarCredito);
@@ -56,9 +66,12 @@ document.addEventListener("DOMContentLoaded", function() {
             natanCheckbox.checked = false;
         }
 
-        // Atualizar o estado das checkboxes no localStorage
+        // Atualizar o estado das checkboxes e dos créditos no localStorage
         localStorage.setItem('matheusCheckbox', matheusCheckbox.checked);
         localStorage.setItem('italoCheckbox', italoCheckbox.checked);
         localStorage.setItem('natanCheckbox', natanCheckbox.checked);
+        localStorage.setItem('creditoMatheus', creditoMatheus.value);
+        localStorage.setItem('creditoItalo', creditoItalo.value);
+        localStorage.setItem('creditoNatan', creditoNatan.value);
     }
 });
