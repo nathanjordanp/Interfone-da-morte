@@ -11,6 +11,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const creditoItalo = document.getElementById('Credito-italo');
     const creditoNatan = document.getElementById('Credito-natan');
 
+    // Carregar estado das checkboxes do localStorage, se existir
+    if (localStorage.getItem('matheusCheckbox') === 'true') {
+        matheusCheckbox.checked = true;
+    }
+    if (localStorage.getItem('italoCheckbox') === 'true') {
+        italoCheckbox.checked = true;
+    }
+    if (localStorage.getItem('natanCheckbox') === 'true') {
+        natanCheckbox.checked = true;
+    }
+
     matheusCheckbox.addEventListener('change', atualizarCredito);
     italoCheckbox.addEventListener('change', atualizarCredito);
     natanCheckbox.addEventListener('change', atualizarCredito);
@@ -20,22 +31,34 @@ document.addEventListener("DOMContentLoaded", function() {
         const marcadas = checkboxesMarcadas.filter(checkbox => checkbox).length;
 
         if (marcadas === 2) {
-            if (!matheusCheckbox.checked) {
+            if (!matheusCheckbox.checked && parseInt(creditoMatheus.value) > 0) {
+                matheusCheckbox.checked = false;
+                italoCheckbox.checked = false;
+                natanCheckbox.checked = false;
                 creditoMatheus.value = Math.max(0, parseInt(creditoMatheus.value) - 1);
                 contadorMatheus.textContent = creditoMatheus.value;
-            } else if (!italoCheckbox.checked) {
+            } else if (!italoCheckbox.checked && parseInt(creditoItalo.value) > 0) {
+                matheusCheckbox.checked = false;
+                italoCheckbox.checked = false;
+                natanCheckbox.checked = false;
                 creditoItalo.value = Math.max(0, parseInt(creditoItalo.value) - 1);
                 contadorItalo.textContent = creditoItalo.value;
-            } else if (!natanCheckbox.checked) {
+            } else if (!natanCheckbox.checked && parseInt(creditoNatan.value) > 0) {
+                matheusCheckbox.checked = false;
+                italoCheckbox.checked = false;
+                natanCheckbox.checked = false;
                 creditoNatan.value = Math.max(0, parseInt(creditoNatan.value) - 1);
                 contadorNatan.textContent = creditoNatan.value;
             }
-        }
-
-        if (marcadas === 3) {
+        } else if (marcadas === 3) {
             matheusCheckbox.checked = false;
             italoCheckbox.checked = false;
             natanCheckbox.checked = false;
         }
+
+        // Atualizar o estado das checkboxes no localStorage
+        localStorage.setItem('matheusCheckbox', matheusCheckbox.checked);
+        localStorage.setItem('italoCheckbox', italoCheckbox.checked);
+        localStorage.setItem('natanCheckbox', natanCheckbox.checked);
     }
 });
